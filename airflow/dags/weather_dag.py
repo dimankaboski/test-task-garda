@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 import pendulum
@@ -6,36 +7,45 @@ import asyncio
 from airflow.sdk import dag, task, Variable
 from weather_api.services.weather import WeatherService, OpenWeatherMapAPI
 
+from weather_api.schemas.weather import WeatherDataCreateSchema
+
+
+# from weather_api.database.models import WeatherData
+
 
 @dag(
     schedule=None,
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
     catchup=False,
-    tags=["example"],
+    tags=["api"],
 )
 def weather_update_data_task():
     @task()
-    def extract():
+    def extract() -> list:
         cities_list = ["London", "Moscow", "Tokyo"]
         provider = OpenWeatherMapAPI(key=os.getenv("OPEN_WEATHER_API_KEY"))
         loop = asyncio.get_event_loop()
         result = loop.run_until_complete(WeatherService(cities_list, provider).get_weather_info())
         return result
 
-    @task(multiple_outputs=True)
-    def transform(order_data_dict: dict):
-        total_order_value = 0
-        for value in order_data_dict.values():
-            total_order_value += value
-        return {"total_order_value": total_order_value}
+    @task()
+    def transform(weather_data: dict) -> list:
+        response = []
+        for el in weather_data:
+            response.append(WeatherDataCreateSchema(city=el['name'],
+                                                    temperature=el['main']['temp'],
+                                                    humidity=el['main']['humidity'],
+                                                    date=datetime.now().date()))
+        print(response)
+        return response
 
     @task()
-    def load(total_order_value: float):
-        print(f"Total order value is: {total_order_value:.2f}")
+    def load(schemas: list) -> None:
+        print(f"Last task")
 
-    order_data = extract()
-    order_summary = transform(order_data)
-    load(order_summary["total_order_value"])
+    weather_data = extract()
+    data = transform(weather_data)
+    load(data)
 
 
 weather_update_data_task()

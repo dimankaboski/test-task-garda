@@ -16,7 +16,7 @@ class OpenWeatherMapAPI(WeatherAPI):
 
     async def get_data_by_city(self, city: str):
         async with ClientSession(base_url=self.url) as session:
-            response = await session.request("GET", f'?appid={self.key}&units={self.units}&q={city}')
+            response = await session.request("GET", f'?appid={self.key}&units={self.units}&q={city}', ssl=False)
         return await response.json()
 
 

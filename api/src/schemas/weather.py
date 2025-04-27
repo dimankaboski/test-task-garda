@@ -1,5 +1,10 @@
-from pydantic import BaseModel
+from datetime import datetime, date
+
+from pydantic import BaseModel, Field
 
 
-class WeatherSchema(BaseModel):
-    ...
+class WeatherDataCreateSchema(BaseModel):
+    city: str
+    date: date
+    temperature: float
+    humidity: int
