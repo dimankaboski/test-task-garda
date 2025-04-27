@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+sqlalchemy==2.0.4
+alembic
+pydantic-settings
+asyncpg
+psycopg
+psycopg-binary
+aiohttp
+watchfiles
+aiokafka
+pytest
+pytest-asyncio
+pytest-postgresql
+pytest-cov
