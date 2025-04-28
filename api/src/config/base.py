@@ -15,5 +15,9 @@ class Base(BaseSettings):
     def DATABASE_URL_psycopg(self):
         return f"postgresql+psycopg://{self.POSTGRES_DB_USER}:{self.POSTGRES_DB_PASSWORD}@weather_postgres:5432/{self.POSTGRES_DB_NAME}"
 
+    @property
+    def REDIS_URL(self):
+        return f"redis://:@redis:6379/0"
+
 
 base_config = Base()

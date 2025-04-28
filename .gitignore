@@ -133,3 +133,4 @@ dmypy.json
 .pyre/
 media/
 docker/postgres/data/
+airflow/logs/
