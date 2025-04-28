@@ -7,6 +7,7 @@ x-airflow-common:
     AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_DB_USER}:${POSTGRES_DB_PASSWORD}@postgres/${AIRFLOW_DB_NAME}
     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://${POSTGRES_DB_USER}:${POSTGRES_DB_PASSWORD}@postgres/${AIRFLOW_DB_NAME}
+    WEATHER_DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_DB_USER}:${POSTGRES_DB_PASSWORD}@postgres/${POSTGRES_DB_NAME}
     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: 'jeY0iMr2ESkRTEI5lx5CORElZPNuYsNQX1He5OYMaJk='
     AIRFLOW__API_AUTH__JWT_SECRET: 'fawjkfawoifh823489124723hfsfbn'
@@ -14,7 +15,7 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-apiserver:8080/execution/'
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+#    _PIP_ADDITIONAL_REQUIREMENTS:
     AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
   volumes:
     - ./airflow/dags:/opt/airflow/dags
