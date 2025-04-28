@@ -11,7 +11,7 @@ from src.database.models.base import Base
 class WeatherData(Base):
     __tablename__ = 'weather_data'
     __table_args__ = (
-        Index('idx_city_date', 'city', 'date'),  # Составной индекс
+        Index('idx_city_date', 'city', 'date'),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)

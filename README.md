@@ -24,12 +24,12 @@ DAG запускается каждый день в 12 по UTC
 Находятся в `api/alembic/versions`
 
 ### FastAPI приложение
+Находится в `api/`
 
 Базовый урл: `http://localhost:1337`
 
 Swagger: `http://localhost:1337/docs`
 
-Находится в `api/`
 
 Модели БД в `api/database/models`
 
